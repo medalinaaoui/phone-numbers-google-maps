@@ -20,7 +20,7 @@ const getTargetInfo = async (url) => {
   });
 
   await browser.close();
-  console.log(target);
+  // console.log(target);
   return target;
 };
 
