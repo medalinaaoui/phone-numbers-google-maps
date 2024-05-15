@@ -38,7 +38,7 @@ async function processCSV(filename) {
     let targets = []; // Declare a variable to store targets
 
     // Check if targets.json file exists
-    const outputPath = "coiffeur.json"; // Change the path accordingly
+    const outputPath = "contacts/coiffeur.json"; // Change the path accordingly
     if (fs.existsSync(outputPath)) {
       // Read existing targets from targets.json
       const existingTargets = fs.readFileSync(outputPath);
