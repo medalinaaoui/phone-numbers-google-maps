@@ -20,7 +20,7 @@ const getTargetInfo = async (url) => {
   });
 
   await browser.close();
-  // console.log(target);
+  console.log(target);
   return target;
 };
 
@@ -32,8 +32,19 @@ import rl from "readline";
 const targets = [];
 
 // Function to process CSV file
+
 async function processCSV(filename) {
   try {
+    let targets = []; // Declare a variable to store targets
+
+    // Check if targets.json file exists
+    const outputPath = "coiffeur.json"; // Change the path accordingly
+    if (fs.existsSync(outputPath)) {
+      // Read existing targets from targets.json
+      const existingTargets = fs.readFileSync(outputPath);
+      targets = JSON.parse(existingTargets);
+    }
+
     // Open the CSV file
     const fileStream = fs.createReadStream(filename);
 
@@ -55,12 +66,14 @@ async function processCSV(filename) {
 
       if (isValidUrl(googleMapsLink)) {
         const result = await getTargetInfo(googleMapsLink);
-        targets.push(result);
+        targets.push(result); // Push the result into the targets array
       }
     }
 
-    // console.log("CSV file successfully processed");
-    console.log(targets);
+    // Write targets back to targets.json
+    fs.writeFileSync(outputPath, JSON.stringify(targets, null, 2));
+
+    console.log("Targets successfully saved to:", outputPath);
   } catch (error) {
     console.error("Error:", error);
   }
